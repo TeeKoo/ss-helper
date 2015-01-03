@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Starting Strength Helper</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_workout">WorkoutActivity</string>
+    <string name="title_lift_list">Lifts</string>
+    <string name="title_lift_detail">Lift Detail</string>
+
+</resources>

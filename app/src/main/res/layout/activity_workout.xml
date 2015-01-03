@@ -1,0 +1,224 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#ffffff"
+    tools:context="com.tk.teekoo777.startingstrengthhelper.WorkoutActivity"
+    android:weightSum="6"
+    android:id="@+id/workout_layout">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:weightSum="5"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/linearLayout">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.40"
+            android:layout_marginTop="20dp">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/linearLayout"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Squat"
+                android:id="@+id/workout1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/workoutlayout_1"
+            android:weightSum="1"
+            android:layout_weight="0.40"
+            android:visibility="visible"
+            android:transitionGroup="false"
+            android:animateLayoutChanges="true"
+            android:nestedScrollingEnabled="false">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="100dp"
+                android:layout_height="95dp"
+                android:textColor="#ffffff"
+                android:background="#004276"
+                android:text=""
+                android:id="@+id/workout_weight_1"
+                android:onClick="changeSetNumber"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="100dp"
+                android:layout_marginLeft="3dp"
+                android:layout_height="95dp"
+                android:textColor="#ffffff"
+                android:background="#004276"
+                android:text=""
+                android:id="@+id/workout_weight_2"
+                android:onClick="changeSetNumber"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="100dp"
+                android:layout_marginLeft="3dp"
+                android:layout_height="95dp"
+                android:textColor="#ffffff"
+                android:background="#004276"
+                android:text=""
+                android:id="@+id/workout_weight_3"
+                android:onClick="changeSetNumber"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="40"
+                android:id="@+id/weight1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Bench Press"
+                android:id="@+id/workout2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/workoutlayout_2"
+            android:weightSum="1"
+            android:animateLayoutChanges="true"
+            android:layout_weight="0.40">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"></FrameLayout>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="100dp"
+                android:layout_height="95dp"
+                android:textColor="#ffffff"
+                android:background="#004276"
+                android:text=""
+                android:id="@+id/workout_weight_4"
+                android:onClick="changeSetNumber"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="100dp"
+                android:layout_marginLeft="3dp"
+                android:layout_height="95dp"
+                android:textColor="#ffffff"
+                android:background="#004276"
+                android:text=""
+                android:id="@+id/workout_weight_5"
+                android:onClick="changeSetNumber"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="100dp"
+                android:layout_marginLeft="3dp"
+                android:layout_height="95dp"
+                android:text=""
+                android:textColor="#ffffff"
+                android:background="#004276"
+                android:id="@+id/workout_weight_6"
+                android:onClick="changeSetNumber"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="30"
+                android:id="@+id/weight2" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Deadlift"
+            android:id="@+id/workout3" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/workoutlayout_3"
+            android:animateLayoutChanges="true"
+            android:weightSum="1"
+            android:layout_weight="0.40" >
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="100dp"
+                android:layout_height="95dp"
+                android:text=""
+                android:textColor="#ffffff"
+                android:background="#004276"
+                android:id="@+id/workout_weight_7"
+                android:onClick="changeSetNumber"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="100dp"
+                android:layout_marginLeft="3dp"
+                android:layout_height="95dp"
+                android:textColor="#ffffff"
+                android:background="#004276"
+                android:text=""
+                android:id="@+id/workout_weight_8"
+                android:onClick="changeSetNumber"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="100dp"
+                android:layout_marginLeft="3dp"
+                android:layout_height="95dp"
+                android:textColor="#ffffff"
+                android:background="#004276"
+                android:text=""
+                android:id="@+id/workout_weight_9"
+                android:onClick="changeSetNumber"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="40"
+                android:id="@+id/weight3" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="success_green">#669900</color>
+    <color name="success_green_dark">#1B5E20</color>
+    <color name="basic_black">#555555</color>
+    <color name="basic_gray">#cccccc</color>
+    <color name="workout_type_green">#67BF74</color>
+    <color name="workout_type_blue">#2093CD</color>
+</resources>
