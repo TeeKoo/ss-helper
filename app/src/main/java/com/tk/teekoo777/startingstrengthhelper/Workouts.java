@@ -3,37 +3,43 @@ package com.tk.teekoo777.startingstrengthhelper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.tk.teekoo777.startingstrengthhelper.lift.LiftContent;
+import com.tk.teekoo777.startingstrengthhelper.lift.Workout;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Calendar;
 
 /**
  * Created by teekoo777 on 28.12.2014.
  */
 public class Workouts extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "SSWorkouts_tk.db";
+    private static final String DATABASE_NAME = "SSWorkouts_tk.db";
     private static final int DATABASE_VERSION = 2;
     private static final String DICTIONARY_TABLE_NAME = "workouts";
+    private static final String DICTIONARY_TABLE_NAME2 = "workout_days";
     private static final String DICTIONARY_TABLE_CREATE =
             "CREATE TABLE IF NOT EXISTS "+DICTIONARY_TABLE_NAME+
                     "(" +
                     "id integer primary key, " +
-                    "workout_type text, " +
+                    "workout_id int, " +
                     "lift text, " +
                     "set1 int, " +
                     "set2 int, " +
                     "set3 int, " +
-                    "weight real, " +
-                    "created_at DATETIME DEFAULT CURRENT_TIMESTAMP);";
+                    "weight real)";
 
+    private static final String DICTIONARY_TABLE_CREATE2 =
+            "CREATE TABLE IF NOT EXISTS "+DICTIONARY_TABLE_NAME2+
+                    "(" +
+                    "id integer primary key, " +
+                    "workout_type text," +
+                    "created_at DATETIME DEFAULT CURRENT_TIMESTAMP);";
     Workouts(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -41,6 +47,7 @@ public class Workouts extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db)
     {
+        db.execSQL(DICTIONARY_TABLE_CREATE2);
         db.execSQL(DICTIONARY_TABLE_CREATE);
     }
 
@@ -57,13 +64,13 @@ public class Workouts extends SQLiteOpenHelper {
     String press
     String row
     */
-    public long insertWorkout  (String workout_type, String lift, int set1, int set2, int set3, double weight)
+    public long insertWorkout  (String workout_id, String lift, int set1, int set2, int set3, double weight)
     {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put("workout_type", workout_type);
+        contentValues.put("workout_id", workout_id);
         contentValues.put("lift", lift);
         contentValues.put("set1", set1);
         contentValues.put("set2", set2);
@@ -73,17 +80,8 @@ public class Workouts extends SQLiteOpenHelper {
         return db.insert(DICTIONARY_TABLE_NAME, null, contentValues);
     }
 
-   /* public Cursor getData(int id){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from contacts where id="+id+"", null );
-        return res;
-    }
-    public int numberOfRows(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        //int numRows = (int) DatabaseUtils.queryNumEntries(db, CONTACTS_TABLE_NAME);
-        return numRows;
-    }
-    public boolean updateContact (Integer id, String name, String phone, String email, String street,String place)
+
+    /*public boolean updateContact (Integer id, String name, String phone, String email, String street,String place)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -94,48 +92,65 @@ public class Workouts extends SQLiteOpenHelper {
         contentValues.put("place", place);
         db.update("contacts", contentValues, "id = ? ", new String[] { Integer.toString(id) } );
         return true;
+    }*/
+
+       public String getLastWorkoutType(){
+           SQLiteDatabase db = this.getReadableDatabase();
+           Cursor res =  db.rawQuery( "select * from workout_days where id = (SELECT MAX(ID) FROM workout_days)", null );
+           if (res.getCount() > 0){
+               res.moveToFirst();
+               return res.getString(res.getColumnIndex("workout_type"));
+           } else{
+               return "";
+           }
+       }
+
+
+
+    public Workout getTodaysWorkout(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String date = df.format(Calendar.getInstance().getTime());
+        Workout w = new Workout();
+        Cursor res = db.query("workout_days", null, "date(created_at) = ?", new String[] {date}, null, null, null);
+
+        if ( res.getCount() > 0 ){
+            res.moveToFirst();
+            w.setDate(res.getString(res.getColumnIndex("created_at")));
+            w.setId(res.getString(res.getColumnIndex("id")));
+            w.setWorkoutType(res.getString(res.getColumnIndex("workout_type")));
+        }
+
+        return w;
     }
 
-    public Integer deleteContact (Integer id)
-    {
+    public String setTodaysWorkout(String workout_type){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete("contacts",
-                "id = ? ",
-                new String[] { Integer.toString(id) });
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("workout_type", workout_type);
+        return String.valueOf(db.insert(DICTIONARY_TABLE_NAME2, null, contentValues));
     }
-    public ArrayList getAllWorkouts()
-    {
-        ArrayList array_list = new ArrayList();
-        //hp = new HashMap();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from contacts", null );
-        res.moveToFirst();
-        while(res.isAfterLast() == false){
-            array_list.add(res.getString(res.getColumnIndex(CONTACTS_COLUMN_NAME)));
-            res.moveToNext();
-        }
-        return array_list;
-    }*/
+
 
     public ArrayList<LiftContent.Lift> getAllWorkouts()
     {
         ArrayList<LiftContent.Lift> array_list = new ArrayList<LiftContent.Lift>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from workouts", null );
+        Cursor res =  db.rawQuery( "select * from workouts JOIN workout_days ON workouts.workout_id=workout_days.id", null );
         res.moveToFirst();
         while(res.isAfterLast() == false){
 
             LiftContent.Lift lift = new LiftContent.Lift
                     (
                       res.getString(res.getColumnIndex("id")),
-                      res.getString(res.getColumnIndex("workout_type")),
+                      res.getString(res.getColumnIndex("workout_id")),
                       res.getString(res.getColumnIndex("lift")),
                       res.getString(res.getColumnIndex("set1")),
                       res.getString(res.getColumnIndex("set2")),
                       res.getString(res.getColumnIndex("set3")),
                       res.getString(res.getColumnIndex("weight")),
-                      res.getString(res.getColumnIndex("created_at"))
+                      res.getString(res.getColumnIndex("workout_type"))
                     );
 
             array_list.add(lift);
@@ -144,4 +159,6 @@ public class Workouts extends SQLiteOpenHelper {
         return array_list;
 
     }
+
+
 }

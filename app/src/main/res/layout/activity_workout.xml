@@ -45,7 +45,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="110dp"
             android:id="@+id/workoutlayout_1"
             android:weightSum="1"
             android:layout_weight="0.40"
@@ -60,9 +60,10 @@
                 android:layout_height="95dp"
                 android:textColor="#ffffff"
                 android:background="#004276"
+                android:textSize="40dp"
                 android:text=""
                 android:id="@+id/workout_weight_1"
-                android:onClick="changeSetNumber"/>
+                android:onClick="changeSetNumber" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -73,7 +74,8 @@
                 android:background="#004276"
                 android:text=""
                 android:id="@+id/workout_weight_2"
-                android:onClick="changeSetNumber"/>
+                android:onClick="changeSetNumber"
+                android:textSize="40dp" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -84,13 +86,16 @@
                 android:background="#004276"
                 android:text=""
                 android:id="@+id/workout_weight_3"
-                android:onClick="changeSetNumber"/>
+                android:onClick="changeSetNumber"
+                android:textSize="40dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="40"
+                android:textSize="30dp"
+                android:layout_marginLeft="20dp"
                 android:id="@+id/weight1" />
         </LinearLayout>
 
@@ -110,7 +115,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="110dp"
             android:id="@+id/workoutlayout_2"
             android:weightSum="1"
             android:animateLayoutChanges="true"
@@ -129,7 +134,8 @@
                 android:background="#004276"
                 android:text=""
                 android:id="@+id/workout_weight_4"
-                android:onClick="changeSetNumber"/>
+                android:onClick="changeSetNumber"
+                android:textSize="40dp" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -140,7 +146,8 @@
                 android:background="#004276"
                 android:text=""
                 android:id="@+id/workout_weight_5"
-                android:onClick="changeSetNumber"/>
+                android:onClick="changeSetNumber"
+                android:textSize="40dp" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -151,13 +158,16 @@
                 android:textColor="#ffffff"
                 android:background="#004276"
                 android:id="@+id/workout_weight_6"
-                android:onClick="changeSetNumber"/>
+                android:onClick="changeSetNumber"
+                android:textSize="40dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="30"
+                android:textSize="30dp"
+                android:layout_marginLeft="20dp"
                 android:id="@+id/weight2" />
         </LinearLayout>
 
@@ -185,7 +195,8 @@
                 android:textColor="#ffffff"
                 android:background="#004276"
                 android:id="@+id/workout_weight_7"
-                android:onClick="changeSetNumber"/>
+                android:onClick="changeSetNumber"
+                android:textSize="40dp" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -196,7 +207,8 @@
                 android:background="#004276"
                 android:text=""
                 android:id="@+id/workout_weight_8"
-                android:onClick="changeSetNumber"/>
+                android:onClick="changeSetNumber"
+                android:textSize="40dp" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -207,14 +219,17 @@
                 android:background="#004276"
                 android:text=""
                 android:id="@+id/workout_weight_9"
-                android:onClick="changeSetNumber"/>
+                android:onClick="changeSetNumber"
+                android:textSize="40dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="40"
-                android:id="@+id/weight3" />
+                android:id="@+id/weight3"
+                android:textSize="30dp"
+                android:layout_marginLeft="20dp" />
         </LinearLayout>
 
     </LinearLayout>

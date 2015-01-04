@@ -34,13 +34,12 @@ public class LiftAdapter extends ArrayAdapter<LiftContent.Lift> {
         // Populate the data into the template view using the data object
         if (lift.workout_type=="A"){
             type.setBackgroundColor(convertView.getResources().getColor(R.color.workout_type_blue));
-
         } else {
             type.setBackgroundColor(convertView.getResources().getColor(R.color.workout_type_green));
         }
 
         lift1.setText(lift.lift);
-        lift2.setText(lift.created_at);
+       // lift2.setText(lift.created_at);
         lift3.setText(lift.set3);
         // Return the completed view to render on screen
         return convertView;

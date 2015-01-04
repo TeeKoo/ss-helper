@@ -1,8 +1,11 @@
 package com.tk.teekoo777.startingstrengthhelper;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,8 +15,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tk.teekoo777.startingstrengthhelper.lift.ButtonFunctions;
 import com.tk.teekoo777.startingstrengthhelper.lift.LiftContent;
+import com.tk.teekoo777.startingstrengthhelper.lift.Workout;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -25,22 +31,53 @@ public class WorkoutActivity extends ActionBarActivity {
     MediaPlayer mp;
     Workouts workouts;
     private String workout_type = "A";
+    Button btn1;
+    Button btn2;
+    Button btn3;
+    Button btn4;
+    Button btn5;
+    Button btn6;
+    Button btn7;
+    Button btn8;
+    Button btn9;
+    private ArrayList<Button> button_arr;
+    ButtonFunctions btn_fn;
+    String workout_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mp = MediaPlayer.create(getApplicationContext(), R.raw.weight_drop);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workout);
         workouts = new Workouts(this);
+        btn1 = (Button) findViewById(R.id.workout_weight_1);
+        btn2 = (Button) findViewById(R.id.workout_weight_2);
+        btn3 = (Button) findViewById(R.id.workout_weight_3);
+        btn4 = (Button) findViewById(R.id.workout_weight_4);
+        btn5 = (Button) findViewById(R.id.workout_weight_5);
+        btn6 = (Button) findViewById(R.id.workout_weight_6);
+        btn7 = (Button) findViewById(R.id.workout_weight_7);
+        btn8 = (Button) findViewById(R.id.workout_weight_8);
+        btn9 = (Button) findViewById(R.id.workout_weight_9);
+        button_arr = new ArrayList<Button>();
+        button_arr.add(btn1);
+        button_arr.add(btn2);
+        button_arr.add(btn3);
+        button_arr.add(btn4);
+        button_arr.add(btn5);
+        button_arr.add(btn6);
+        button_arr.add(btn7);
+        button_arr.add(btn8);
+        button_arr.add(btn9);
+        btn_fn = new ButtonFunctions(this, button_arr);
+        setWorkout();
+        btn_fn.restoreTexts();
         LinearLayout workout1_layout = (LinearLayout) findViewById(R.id.workoutlayout_1);
         LinearLayout workout2_layout = (LinearLayout) findViewById(R.id.workoutlayout_2);
         LinearLayout workout3_layout = (LinearLayout) findViewById(R.id.workoutlayout_3);
 
-        setWorkoutTexts("A");
         final GestureDetector gdt = new GestureDetector(new RelativeLayoutTouchListener(workout1_layout, this));
         final GestureDetector gdt2 = new GestureDetector(new RelativeLayoutTouchListener(workout2_layout, this));
         final GestureDetector gdt3 = new GestureDetector(new RelativeLayoutTouchListener(workout3_layout, this));
-
-
 
         workout1_layout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -65,6 +102,39 @@ public class WorkoutActivity extends ActionBarActivity {
         });
 
     }
+
+    @Override
+    protected void onStop(){
+        btn_fn.setAllTexts();
+        super.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        btn_fn.setAllTexts();
+    }
+
+
+    private void setWorkout() {
+        Workout todays_workout = workouts.getTodaysWorkout();
+
+        if (todays_workout.getId()==null ){
+            btn_fn.clearAll();
+            String worktype = workouts.getLastWorkoutType();
+            workout_type = (worktype=="" || worktype=="A") ? "A" : "B";
+            workout_id = workouts.setTodaysWorkout(workout_type);
+        } else {
+            workout_id = todays_workout.getId();
+            String worktype = workouts.getLastWorkoutType();
+            workout_type = (worktype=="" || worktype=="A") ? "A" : "B";
+            workout_id = workouts.setTodaysWorkout(workout_type);
+        }
+
+        //workouts.getWorkOutsById(todays_workout.workout);
+        //setWorkoutTexts(test.getWorkoutType());
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,18 +218,15 @@ public class WorkoutActivity extends ActionBarActivity {
             txt3.setText("Deadlift");
         }
         if (wtype.equals("B")){
-            txt1.setText("Press");
-            txt2.setText("Row");
-            txt3.setText("Squat");
+            txt1.setText("Squat");
+            txt2.setText("Press");
+            txt3.setText("Row");
         }
 
     }
 
     private void insertWorkouts(String layout_id){
        if (layout_id.equals("com.tk.teekoo777.startingstrengthhelper:id/workoutlayout_1") ){
-           Button btn1 = (Button) findViewById(R.id.workout_weight_1);
-           Button btn2 = (Button) findViewById(R.id.workout_weight_2);
-           Button btn3 = (Button) findViewById(R.id.workout_weight_3);
            TextView weighttext = (TextView) findViewById(R.id.weight1);
            String set1 = btn1.getText().toString();
            String set2 = btn2.getText().toString();
@@ -169,12 +236,9 @@ public class WorkoutActivity extends ActionBarActivity {
            int lift2 =  (set2.equals("")) ? 0 : Integer.parseInt(set2);
            int lift3 =  (set3.equals("")) ? 0 : Integer.parseInt(set3);
            long weight = Long.parseLong(weight_txt);
-           workouts.insertWorkout(workout_type, "squat", lift1, lift2, lift3, weight);
+           workouts.insertWorkout(String.valueOf(workout_id), "squat", lift1, lift2, lift3, weight);
        }
         if (layout_id.equals("com.tk.teekoo777.startingstrengthhelper:id/workoutlayout_2")){
-            Button btn1 = (Button) findViewById(R.id.workout_weight_4);
-            Button btn2 = (Button) findViewById(R.id.workout_weight_5);
-            Button btn3 = (Button) findViewById(R.id.workout_weight_6);
             TextView weighttext = (TextView) findViewById(R.id.weight2);
             TextView workout_txt = (TextView) findViewById(R.id.workout2);
             String set1 = btn1.getText().toString();
@@ -186,12 +250,9 @@ public class WorkoutActivity extends ActionBarActivity {
             int lift3 =  (set3.equals("")) ? 0 : Integer.parseInt(set3);
             long weight = Long.parseLong(weight_txt);
             String workout_text = workout_txt.getText().toString();
-            workouts.insertWorkout(workout_type, workout_text, lift1, lift2, lift3, weight);
+            workouts.insertWorkout(String.valueOf(workout_id), workout_text, lift1, lift2, lift3, weight);
         }
         if (layout_id.equals("com.tk.teekoo777.startingstrengthhelper:id/workoutlayout_3")){
-            Button btn1 = (Button) findViewById(R.id.workout_weight_7);
-            Button btn2 = (Button) findViewById(R.id.workout_weight_8);
-            Button btn3 = (Button) findViewById(R.id.workout_weight_9);
             TextView weighttext = (TextView) findViewById(R.id.weight3);
             TextView workout_txt = (TextView) findViewById(R.id.workout3);
             String set1 = btn1.getText().toString();
@@ -203,7 +264,7 @@ public class WorkoutActivity extends ActionBarActivity {
             int lift3 =  (set3.equals("")) ? 0 : Integer.parseInt(set3);
             long weight = Long.parseLong(weight_txt);
             String workout_text = workout_txt.getText().toString();
-            workouts.insertWorkout(workout_type, workout_text, lift1, lift2, lift3, weight);
+            workouts.insertWorkout(String.valueOf(workout_id), workout_text, lift1, lift2, lift3, weight);
         }
     }
 }
